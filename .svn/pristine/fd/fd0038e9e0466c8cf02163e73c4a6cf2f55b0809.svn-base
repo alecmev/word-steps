@@ -1,0 +1,11 @@
+﻿<xapCache source="D:\Stuff\work\WordSteps\Bin\Debug\WordSteps.xap" wasSigned="False" certificateThumbprint="" TimeStampUrl="" lastWriteTime="26/11/2011 16:03:34">
+  <file source="D:\Stuff\work\WordSteps\Bin\Debug\WMAppManifest.xml" archivePath="WMAppManifest.xml" lastWriteTime="24/11/2011 16:52:45" />
+  <file source="D:\Stuff\work\WordSteps\Background.png" archivePath="Background.png" lastWriteTime="24/11/2011 16:52:40" />
+  <file source="D:\Stuff\work\WordSteps\ApplicationIcon.png" archivePath="ApplicationIcon.png" lastWriteTime="24/11/2011 16:52:41" />
+  <file source="D:\Stuff\work\WordSteps\obj\Debug\WordSteps.dll" archivePath="WordSteps.dll" lastWriteTime="26/11/2011 16:03:34" />
+  <file source="C:\Program Files (x86)\Microsoft SDKs\Windows Phone\v7.1\Libraries\Silverlight\Microsoft.Phone.Controls.dll" archivePath="Microsoft.Phone.Controls.dll" lastWriteTime="15/09/2011 15:36:26" />
+  <file source="C:\Program Files (x86)\Microsoft SDKs\Windows Phone\v7.1\Toolkit\Aug11\Bin\Microsoft.Phone.Controls.Toolkit.dll" archivePath="Microsoft.Phone.Controls.Toolkit.dll" lastWriteTime="12/08/2011 19:19:16" />
+  <file source="D:\Stuff\work\WordSteps\SplashScreenImage.jpg" archivePath="SplashScreenImage.jpg" lastWriteTime="24/11/2011 16:52:46" />
+  <file source="D:\Stuff\work\WordSteps\SplashScreenImage.png" archivePath="SplashScreenImage.png" lastWriteTime="24/11/2011 16:52:39" />
+  <file source="D:\Stuff\work\WordSteps\Bin\Debug\AppManifest.xaml" archivePath="AppManifest.xaml" lastWriteTime="24/11/2011 16:52:45" />
+</xapCache>

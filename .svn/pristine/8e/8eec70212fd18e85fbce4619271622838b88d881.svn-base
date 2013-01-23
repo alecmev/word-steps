@@ -1,0 +1,154 @@
+﻿using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Data.Linq;
+using System.Data.Linq.Mapping;
+using System.Linq;
+using System.Collections.Generic;
+
+namespace WordSteps
+{
+    public class WordStepsViewModel
+        : INotifyPropertyChanged
+    {
+        private WordStepsDataBase DataBase { get; set; }
+
+        private ObservableCollection<Language> _Languages;
+        public ObservableCollection<Language> Languages
+        {
+            get { return _Languages; }
+            set
+            {
+                if (_Languages != value)
+                {
+                    _Languages = value;
+                    NotifyPropertyChanged("Languages");
+                }
+            }
+        }
+
+        private ObservableCollection<Dictionary> _Dictionaries;
+        public ObservableCollection<Dictionary> Dictionaries
+        {
+            get { return _Dictionaries; }
+            set
+            {
+                if (_Dictionaries != value)
+                {
+                    _Dictionaries = value;
+                    NotifyPropertyChanged("Dictionaries");
+                }
+            }
+        }
+
+        public WordStepsViewModel(string connectionString)
+        {
+            DataBase = new WordStepsDataBase(connectionString);
+
+            DataLoadOptions loadOptions = new DataLoadOptions();
+            loadOptions.AssociateWith<Dictionary>(x => x.Words.OrderBy(y => y.Original));
+            DataBase.LoadOptions = loadOptions;
+
+            LoadLanguages();
+            if (Languages.Count == 0)
+            {
+                AddLanguages(new Language[] {
+                        new Language() { Code = "en", Name = "English" },
+                        new Language() { Code = "ru", Name = "Русский" },
+                        new Language() { Code = "lv", Name = "Latviešu" }
+                    });
+            }
+        }
+
+        public void SubmitChanges()
+        {
+            DataBase.SubmitChanges();
+        }
+
+        public void LoadLanguages()
+        {
+            Languages = new ObservableCollection<Language>(from x in DataBase.Languages orderby x.Code select x);
+        }
+
+        public void AddLanguage(Language language, bool submit = true)
+        {
+            DataBase.Languages.InsertOnSubmit(language);
+            if (submit)
+            {
+                SubmitChanges();
+                LoadLanguages();
+            }
+        }
+
+        public void AddLanguages(Language[] languages, bool submit = true)
+        {
+            DataBase.Languages.InsertAllOnSubmit(languages);
+            if (submit)
+            {
+                SubmitChanges();
+                LoadLanguages();
+            }
+        }
+
+        public void LoadData()
+        {
+            Dictionaries = new ObservableCollection<Dictionary>(from x in DataBase.Dictionaries orderby x.Name select x);
+            if (Dictionaries.Count > 1)
+            {
+                Dictionaries[Dictionaries.Count - 2].Position = DictionaryPosition.None;
+                Dictionaries[0].Position = DictionaryPosition.First;
+                Dictionaries[1].Position = DictionaryPosition.None;
+                Dictionaries[Dictionaries.Count - 1].Position = DictionaryPosition.Last;
+            }
+            else if (Dictionaries.Count == 1)
+                Dictionaries[0].Position = DictionaryPosition.Both;
+        }
+
+        public void AddDictionary(Dictionary dictionary)
+        {
+            DataBase.Dictionaries.InsertOnSubmit(dictionary);
+            SubmitChanges();
+            LoadData();
+        }
+
+        public void DeleteDictionary(Dictionary dictionary)
+        {
+            DataBase.Dictionaries.DeleteOnSubmit(dictionary);
+            SubmitChanges();
+            LoadData();
+        }
+
+        public void AddWord(Word word)
+        {
+            DataBase.Words.InsertOnSubmit(word);
+            SubmitChanges();
+            LoadData();
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void NotifyPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+
+    [Database]
+    public class WordStepsDataBase
+        : DataContext
+    {
+        public Table<Language> Languages;
+        public Table<Word> Words;
+        public Table<Dictionary> Dictionaries;
+
+        public WordStepsDataBase(string connectionString)
+            : base(connectionString)
+        {
+            if (!DatabaseExists())
+                CreateDatabase();
+        }
+    }
+}

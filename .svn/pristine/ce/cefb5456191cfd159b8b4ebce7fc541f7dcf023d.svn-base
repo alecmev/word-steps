@@ -1,0 +1,108 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Net;
+using System.Threading;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
+using System.Windows.Shapes;
+using Microsoft.Phone.Controls;
+using Microsoft.Phone.Shell;
+using WordSteps;
+using System.Collections.ObjectModel;
+
+namespace WordSteps
+{
+    public partial class MainPage : PhoneApplicationPage, INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /*private DictionaryList _test = new DictionaryList();
+        public DictionaryList Test
+        {
+            get { return _test; }
+            set
+            {
+                if (_test != value)
+                {
+                    _test = value;
+                    NotifyPropertyChanged("Test");
+                }
+            }
+        }*/
+
+        public MainPage()
+        {
+            InitializeComponent();
+
+            this.DataContext = App.ViewModel;
+        }
+
+        private void NotifyPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        private void ApplicationBarMenuItem_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/LoginPage.xaml", UriKind.Relative));
+        }
+
+        private void ApplicationBar_StateChanged(object sender, ApplicationBarStateChangedEventArgs e)
+        {
+            this.ApplicationBar.Opacity = (this.ApplicationBar.Opacity == 1.0) ? 0.5 : 1.0;
+        }
+
+        private void ApplicationBarMenuItem_Click_1(object sender, EventArgs e)
+        {
+            //string tmp = "Languages:";
+            //foreach (Language lang in App.ViewModel.Languages) tmp += " " + lang.Name + ":" + lang.Code;
+            //MessageBox.Show(tmp);
+            /*List<Dictionary> dictionaries = ((ObservableCollection<Dictionary>)App.ViewModel.AllDictionaries).Where(x => x.IsSelected == true).ToList();
+            foreach (Dictionary x in dictionaries)
+                App.ViewModel.AddWord(new Word { Original = "a", Translation = "b", Dictionary = x });*/
+            App.ViewModel.AddDictionary(new Dictionary() { Name = "Cars" });
+            App.ViewModel.AddDictionary(new Dictionary() { Name = "Food" });
+            App.ViewModel.AddDictionary(new Dictionary() { Name = "Colors" });
+            App.ViewModel.AddDictionary(new Dictionary() { Name = "Flowers" });
+            //((DictionaryList)Dictionaries.Source).Add(new DictionaryItem("FUCK YEA"));
+            /*DictionaryList source = (DictionaryList)Dictionaries.Source;
+            List<DictionaryItem> toRemove = source.Where(item => item.IsSelected == true).ToList();
+            foreach (DictionaryItem item in toRemove)
+            {
+                item.Name = "FUCK YEA";
+                //source.Remove(item);
+            }*/
+        }
+
+        private void DataTemplate_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            CheckBox targetCheckBox = (CheckBox)((Grid)sender).Children[0];
+            if (!e.OriginalSource.Equals((object)targetCheckBox)) targetCheckBox.IsChecked = !targetCheckBox.IsChecked;
+        }
+
+        private void CheckBox_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void ApplicationBarMenuItem_Click_2(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/SettingsPage.xaml", UriKind.Relative));
+        }
+
+        private void ApplicationBarMenuItem_Click_3(object sender, EventArgs e)
+        {
+            foreach (Dictionary dictionary in App.ViewModel.Dictionaries) if (dictionary.IsSelected) App.ViewModel.DeleteDictionary(dictionary);
+        }
+    }
+}

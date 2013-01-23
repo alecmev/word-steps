@@ -1,0 +1,148 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Globalization;
+using System.Windows;
+using System.Windows.Data;
+
+namespace WordSteps
+{
+    /*public enum DictionaryItemPosition
+    {
+        First,
+        Last,
+        Both,
+        None
+    }
+
+    public class DictionaryItem : Dictionary, INotifyPropertyChanged
+    {
+        private bool isSelected = false;
+        public bool IsSelected
+        {
+            get { return isSelected; }
+            set
+            {
+                if (value != isSelected)
+                {
+                    isSelected = value;
+                    NotifyPropertyChanged("IsSelected");
+                }
+            }
+        }
+
+        private DictionaryItemPosition position = DictionaryItemPosition.None;
+        public DictionaryItemPosition Position
+        {
+            get { return position; }
+            set
+            {
+                if (value != position)
+                {
+                    position = value;
+                    NotifyPropertyChanged("Position");
+                }
+            }
+        }
+
+        public new string Name
+        {
+            get { return base.Name; }
+            set
+            {
+                if (value != base.Name)
+                {
+                    base.Name = value;
+                    NotifyPropertyChanged("Name");
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public DictionaryItem()
+            : base()
+        {
+        }
+
+        private void NotifyPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+    public class DictionaryList : ObservableCollection<DictionaryItem>
+    {
+        public DictionaryList()
+        {
+            Add(new DictionaryItem() { Name = "Cars" });
+            Add(new DictionaryItem() { Name = "Flowers"});
+            Add(new DictionaryItem() { Name = "Colors"});
+            Add(new DictionaryItem() { Name = "Food" });
+            Add(new DictionaryItem() { Name = "Furniture" });
+            Add(new DictionaryItem() { Name = "Days" });
+            Add(new DictionaryItem() { Name = "Months" });
+            Add(new DictionaryItem() { Name = "Drinks" });
+        }
+
+        public new void Add(DictionaryItem item)
+        {
+            int index = this.Count;
+            for (int i = 0; i < this.Count; ++i)
+            {
+                if (string.Compare(item.Name, this[i].Name) <= 0)
+                {
+                    index = i;
+                    break;
+                }
+            }
+            Insert(index, item);
+            if (index == 0)
+            {
+                if (this.Count == 1)
+                    this[0].Position = DictionaryItemPosition.Both;
+                else
+                {
+                    this[0].Position = DictionaryItemPosition.First;
+                    this[1].Position = (this[1].Position == DictionaryItemPosition.Both) ? DictionaryItemPosition.Last : DictionaryItemPosition.None;
+                }
+            }
+            else if (index == this.Count - 1)
+            {
+                this[index].Position = DictionaryItemPosition.Last;
+                this[index - 1].Position = (this[index - 1].Position == DictionaryItemPosition.Both) ? DictionaryItemPosition.First : DictionaryItemPosition.None;
+            }
+        }
+
+        public new void Remove(DictionaryItem item)
+        {
+            base.Remove(item);
+            if (item.Position == DictionaryItemPosition.First)
+                this[0].Position = (this[0].Position == DictionaryItemPosition.Last) ? DictionaryItemPosition.Both : DictionaryItemPosition.First;
+            else if (item.Position == DictionaryItemPosition.Last)
+                this[this.Count - 1].Position = (this[this.Count - 1].Position == DictionaryItemPosition.First) ? DictionaryItemPosition.Both : DictionaryItemPosition.Last;
+        }
+    }
+
+    public class DictionaryListBoxItemOffsetConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            DictionaryItemPosition position = (DictionaryItemPosition)value;
+            return new Thickness(0, position == DictionaryItemPosition.First || position == DictionaryItemPosition.Both ? (Int32)Application.Current.Resources["DictionaryListBoxFirstItemTopOffset"] : 0, 0, position == DictionaryItemPosition.Last || position == DictionaryItemPosition.Both ? (Int32)Application.Current.Resources["DictionaryListBoxLastItemBottomOffset"] : 0);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            Thickness margin = (Thickness)value;
+            if (margin.Top == (Int32)Application.Current.Resources["DictionaryListBoxFirstItemTopOffset"])
+            {
+                if (margin.Bottom == (Int32)Application.Current.Resources["DictionaryListBoxLastItemBottomOffset"]) return DictionaryItemPosition.Both;
+                else return DictionaryItemPosition.First;
+            }
+            else if (margin.Bottom == (Int32)Application.Current.Resources["DictionaryListBoxLastItemBottomOffset"]) return DictionaryItemPosition.Last;
+            else return DictionaryItemPosition.None;
+        }
+    }*/
+}

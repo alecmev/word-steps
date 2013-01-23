@@ -1,0 +1,18 @@
+﻿<xapCache source="D:\Stuff\work\WordSteps\Bin\Debug\WordSteps.xap" wasSigned="False" certificateThumbprint="" TimeStampUrl="" lastWriteTime="28/11/2011 04:11:51">
+  <file source="D:\Stuff\work\WordSteps\Bin\Debug\WMAppManifest.xml" archivePath="WMAppManifest.xml" lastWriteTime="24/11/2011 16:52:45" />
+  <file source="D:\Stuff\work\WordSteps\Background.png" archivePath="Background.png" lastWriteTime="24/11/2011 16:52:40" />
+  <file source="D:\Stuff\work\WordSteps\ApplicationIcon.png" archivePath="ApplicationIcon.png" lastWriteTime="24/11/2011 16:52:41" />
+  <file source="D:\Stuff\work\WordSteps\obj\Debug\WordSteps.dll" archivePath="WordSteps.dll" lastWriteTime="28/11/2011 04:11:50" />
+  <file source="C:\Program Files (x86)\Microsoft SDKs\Windows Phone\v7.1\Libraries\Silverlight\Microsoft.Phone.Controls.dll" archivePath="Microsoft.Phone.Controls.dll" lastWriteTime="15/09/2011 15:36:26" />
+  <file source="C:\Program Files (x86)\Microsoft SDKs\Windows Phone\v7.1\Toolkit\Aug11\Bin\Microsoft.Phone.Controls.Toolkit.dll" archivePath="Microsoft.Phone.Controls.Toolkit.dll" lastWriteTime="12/08/2011 19:19:16" />
+  <file source="D:\Stuff\work\WordSteps\Icons\appbar.addnotes.rest.png" archivePath="Icons\appbar.addnotes.rest.png" lastWriteTime="24/11/2011 16:52:46" />
+  <file source="D:\Stuff\work\WordSteps\Icons\appbar.cancel.rest.png" archivePath="Icons\appbar.cancel.rest.png" lastWriteTime="24/11/2011 16:52:46" />
+  <file source="D:\Stuff\work\WordSteps\Icons\appbar.check.rest.png" archivePath="Icons\appbar.check.rest.png" lastWriteTime="24/11/2011 16:52:46" />
+  <file source="D:\Stuff\work\WordSteps\Icons\appbar.delete.rest.png" archivePath="Icons\appbar.delete.rest.png" lastWriteTime="24/11/2011 16:52:46" />
+  <file source="D:\Stuff\work\WordSteps\Icons\appbar.edit.rest.png" archivePath="Icons\appbar.edit.rest.png" lastWriteTime="24/11/2011 16:52:46" />
+  <file source="D:\Stuff\work\WordSteps\Icons\appbar.feature.settings.rest.png" archivePath="Icons\appbar.feature.settings.rest.png" lastWriteTime="24/11/2011 16:52:46" />
+  <file source="D:\Stuff\work\WordSteps\Icons\appbar.photo.fix.rest.png" archivePath="Icons\appbar.photo.fix.rest.png" lastWriteTime="24/11/2011 16:52:46" />
+  <file source="D:\Stuff\work\WordSteps\README_FIRST.txt" archivePath="README_FIRST.txt" lastWriteTime="26/11/2011 17:16:20" />
+  <file source="D:\Stuff\work\WordSteps\SplashScreenImage.jpg" archivePath="SplashScreenImage.jpg" lastWriteTime="27/11/2011 16:30:55" />
+  <file source="D:\Stuff\work\WordSteps\Bin\Debug\AppManifest.xaml" archivePath="AppManifest.xaml" lastWriteTime="26/11/2011 17:59:21" />
+</xapCache>

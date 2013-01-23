@@ -1,0 +1,147 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Net;
+using System.Threading;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
+using System.Windows.Shapes;
+using Microsoft.Phone.Controls;
+using Microsoft.Phone.Shell;
+using WordSteps;
+using System.Collections.ObjectModel;
+using System.Windows.Data;
+
+namespace WordSteps
+{
+    public partial class MainPage : PhoneApplicationPage, INotifyPropertyChanged
+    {
+        public static readonly DependencyProperty IsAnyDictionarySelectedProperty = DependencyProperty.Register("IsAnyDictionarySelected", typeof(bool), typeof(MainPage), new PropertyMetadata(new PropertyChangedCallback(IsAnyDictionarySelectedPropertyChanged)));
+        public bool IsAnyDictionarySelected
+        {
+            get { return (bool)GetValue(IsAnyDictionarySelectedProperty); }
+            set { SetValue(IsAnyDictionarySelectedProperty, value); }
+        }
+        private static void IsAnyDictionarySelectedPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            (d as MainPage).IsAnyDictionarySelectedPropertyChanged(e);
+        }
+        private void IsAnyDictionarySelectedPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+            (ApplicationBar.Buttons[0] as ApplicationBarIconButton).IsEnabled = (bool)e.NewValue;
+            (ApplicationBar.Buttons[2] as ApplicationBarIconButton).IsEnabled = (bool)e.NewValue;
+        }
+
+        public MainPage()
+        {
+            InitializeComponent();
+
+            this.DataContext = App.DataBaseViewModel;
+            Binding bind = new Binding("IsAnyDictionarySelected");
+            bind.Source = App.DataBaseViewModel;
+            bind.Mode = BindingMode.OneWay;
+            this.SetBinding(MainPage.IsAnyDictionarySelectedProperty, bind);
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void NotifyPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        private void ApplicationBarMenuItem_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/LoginPage.xaml", UriKind.Relative));
+        }
+
+        private void ApplicationBar_StateChanged(object sender, ApplicationBarStateChangedEventArgs e)
+        {
+            this.ApplicationBar.Opacity = (this.ApplicationBar.Opacity == 1.0) ? 0.8 : 1.0;
+        }
+
+        private void ApplicationBarMenuItem_Click_1(object sender, EventArgs e)
+        {
+            //string tmp = "Languages:";
+            //foreach (Language lang in App.ViewModel.Languages) tmp += " " + lang.Name + ":" + lang.Code;
+            //MessageBox.Show(tmp);
+            /*List<Dictionary> dictionaries = ((ObservableCollection<Dictionary>)App.ViewModel.AllDictionaries).Where(x => x.IsSelected == true).ToList();
+            foreach (Dictionary x in dictionaries)
+                App.ViewModel.AddWord(new Word { Original = "a", Translation = "b", Dictionary = x });*/
+            //App.DataBaseViewModel.AddDictionary(new Dictionary() { Name = "Cars" });
+            //App.DataBaseViewModel.AddDictionary(new Dictionary() { Name = "Food" });
+            //App.DataBaseViewModel.AddDictionary(new Dictionary() { Name = "Colors" });
+            //App.DataBaseViewModel.AddDictionary(new Dictionary() { Name = "Flowers" });
+            //((DictionaryList)Dictionaries.Source).Add(new DictionaryItem("FUCK YEA"));
+            /*DictionaryList source = (DictionaryList)Dictionaries.Source;
+            List<DictionaryItem> toRemove = source.Where(item => item.IsSelected == true).ToList();
+            foreach (DictionaryItem item in toRemove)
+            {
+                item.Name = "FUCK YEA";
+                //source.Remove(item);
+            }*/
+        }
+
+        private void DataTemplate_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            CheckBox targetCheckBox = (CheckBox)((Grid)sender).Children[0];
+            if (!e.OriginalSource.Equals((object)targetCheckBox)) targetCheckBox.IsChecked = !targetCheckBox.IsChecked;
+        }
+
+        private void CheckBox_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void ApplicationBarMenuItem_Click_2(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/SettingsPage.xaml?section=language", UriKind.Relative));
+        }
+
+        private void ApplicationBarMenuItem_Click_3(object sender, EventArgs e)
+        {
+            foreach (Dictionary dictionary in App.DataBaseViewModel.Dictionaries) if (dictionary.IsSelected) App.DataBaseViewModel.DeleteDictionary(dictionary);
+        }
+
+        private void ApplicationBarIconButton_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/SettingsPage.xaml", UriKind.Relative));
+        }
+
+        private void ContextMenu_Opened(object sender, RoutedEventArgs e)
+        {
+            SystemTray.IsVisible = false;
+            ApplicationBar.IsVisible = false;
+        }
+
+        private void ContextMenu_Closed(object sender, RoutedEventArgs e)
+        {
+            SystemTray.IsVisible = true;
+            ApplicationBar.IsVisible = true;
+        }
+
+        private void ApplicationBarIconButton_Click_1(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/NewDictionaryPage.xaml", UriKind.Relative));
+        }
+
+        private void ApplicationBarIconButton_Click_2(object sender, EventArgs e)
+        {
+            ObservableCollection<Dictionary> selected = App.DataBaseViewModel.SelectedDictionaries;
+            if (selected.Count > 0 && MessageBox.Show("Are you sure you want to delete " + selected.Count.ToString() + " selected dictionaries?", "Alert", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            {
+                foreach (Dictionary dictionary in selected)
+                    App.DataBaseViewModel.DeleteDictionary(dictionary);
+            }
+        }
+    }
+}

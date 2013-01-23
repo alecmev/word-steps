@@ -1,0 +1,99 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="WordSteps.WordsPage"
+    x:Name="WordsPageControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:wordsteps="clr-namespace:WordSteps"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    shell:SystemTray.IsVisible="True"
+    shell:SystemTray.BackgroundColor="{StaticResource WordStepsAccentColor}"
+    shell:SystemTray.ForegroundColor="{StaticResource WordStepsAntiAccentColor}"
+    wordsteps:TiltEffect.IsTiltEnabled="True"
+    d:DesignHeight="768" d:DesignWidth="480">
+
+    <phone:PhoneApplicationPage.Resources>
+
+        <wordsteps:WordListBoxOffsetConverter x:Key="WordListBoxOffsetConverter" />
+
+        <DataTemplate x:Key="WordItemTemplate">
+            <Grid Margin="{Binding Position, Converter={StaticResource WordListBoxOffsetConverter}}" Tap="WordTap">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <CheckBox wordsteps:TiltEffect.SuppressTilt="True" Grid.Column="0" VerticalAlignment="Top" BorderThickness="0" IsChecked="{Binding IsSelected, Mode=TwoWay}" Tap="WordCheckBoxTap" />
+                <Grid Grid.Column="1" VerticalAlignment="Top" Margin="7, 0, 0, 0">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" FontFamily="Segoe WP Light" FontSize="48" Foreground="Black" VerticalAlignment="Top" Text="{Binding Original}" />
+                    <TextBlock Grid.Row="1" FontFamily="Segoe WP Semibold" FontSize="24" Foreground="Gray" Margin="8, -8, 0, 0" Text="{Binding Translation}" />
+
+                </Grid>
+
+            </Grid>
+        </DataTemplate>
+
+    </phone:PhoneApplicationPage.Resources>
+
+    <Grid x:Name="LayoutRoot" Background="{StaticResource WordStepsBackgroundBrush}">
+
+        <Border Height="144" VerticalAlignment="Top" Background="{StaticResource WordStepsAccentBrush}" />
+
+        <controls:Pivot Title="WORDSTEPS - WORDS" Foreground="{StaticResource WordStepsAntiAccentBrush}">
+
+            <controls:PivotItem Header="all" Background="Transparent" Margin="0">
+                <Grid Margin="0, 11, 0, 0">
+                    <ListBox Margin="21, 0, 0, 0" ItemTemplate="{StaticResource WordItemTemplate}" ItemsSource="{Binding Words}" />
+                    <wordsteps:LanguageControl IsEnabled="False" />
+                </Grid>
+            </controls:PivotItem>
+
+        </controls:Pivot>
+
+    </Grid>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar Opacity="0.8" StateChanged="ApplicationBarStateChanged" BackgroundColor="{StaticResource WordStepsDarkAccentColor}" ForegroundColor="{StaticResource WordStepsAntiAccentColor}">
+            <shell:ApplicationBarIconButton IconUri="/Icons/appbar.photo.fix.rest.png" Text="learn" IsEnabled="False" />
+            <shell:ApplicationBarIconButton IconUri="/Icons/appbar.addnotes.rest.png" Text="new" IsEnabled="False" Click="NewClick" />
+            <shell:ApplicationBarIconButton IconUri="/Icons/appbar.edit.rest.png" Text="edit" IsEnabled="False" Click="EditClick" />
+            <shell:ApplicationBarIconButton IconUri="/Icons/appbar.delete.rest.png" Text="delete" IsEnabled="False" Click="DeleteClick" />
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardIn"/>
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardIn"/>
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardOut"/>
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardOut"/>
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
+
+</phone:PhoneApplicationPage>
